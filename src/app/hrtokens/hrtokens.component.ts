@@ -1,6 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Query } from '../chat-bot/chat-bot.component';
+import { Query } from '../hrquery/hrquery.component';
+
 import { QueryService } from '../service/query.service';
+import { ResponseService } from '../service/response.service';
+
+export class Response{
+  constructor(
+    public question: string,
+    public answer: string,
+    public emailId: string,
+    public qid: number){}
+}
 
 @Component({
   selector: 'app-hrtokens',
@@ -9,14 +19,17 @@ import { QueryService } from '../service/query.service';
 })
 export class HrtokensComponent implements OnInit {
   q: Query[];
+  r: Response;
 
-  constructor(private queryservice: QueryService) { }
+  constructor(private queryservice: QueryService,
+    private responseservice: ResponseService) { }
 
   ngOnInit(): void {
     this.queryservice.getQueries().subscribe(response => this.q = response);
   }
 
-  respond(answer){
+  respond(){
+    // this.responseservice.sendResponse(r).subscribe();
     
   }
 

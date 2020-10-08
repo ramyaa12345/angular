@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../service/authentication.service';
 import { QueryService } from '../service/query.service';
+declare let window: any; 
 
-export class Query{
-  constructor(
-    public query: string,
-    public emailId: string){}
-}
+
 
 @Component({
   selector: 'app-chat-bot',
@@ -14,20 +11,25 @@ export class Query{
   styleUrls: ['./chat-bot.component.css']
 })
 export class ChatBotComponent implements OnInit {
-  q:Query;
-  query: any;
-  email: any;
+  public message;
+  sendMessage(){
+    console.log(this.message)
+  }
+  
 
-  constructor(private authenticationservice: AuthenticationService,
-    private queryservice: QueryService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.email = this.authenticationservice.email();
+    
+    (function(d, m){
+      var kommunicateSettings = 
+          {"appId":"3234d55ac5a78ce5678c7ea59bbbda70d","popupWidget":true,"automaticChatOpenOnNavigation":true};
+      var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
+      s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+      var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
+      window.kommunicate = m; m._globals = kommunicateSettings;
+  })(document, window.kommunicate || {});
   }
 
-  sendQuery(query){
-    this.q=new Query(query, this.email);
-    this.queryservice.postQuery(this.q).subscribe();
-  }
-
+  
 }

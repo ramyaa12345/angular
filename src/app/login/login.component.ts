@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   errorDataMessage = "Email is not registered"
   invalidData = false
   loggedInTo = ""
+  r: any;
 
   constructor(
     private router:Router,
@@ -35,15 +36,30 @@ export class LoginComponent implements OnInit {
     this.authenticationservice.authenticate(this.emailId);
     this.loginService.executeEmployeeLoginService(data).subscribe(
       response => {
-        if(response == null){
-          this.loginService.executeHrLoginService(data).subscribe(response=>{
-            if(response != null){
-              this.router.navigate(["hrtokens"])
+        if(response == 0){
+          this.loginService.executeHrLoginService(data).subscribe(
+            response1 => {
+              if(response1 == 0){
+                this.invalidLogin = true
+              }
+              else{
+                this.loginService.getByEmailHR(this.emailId).subscribe(response => this.r = response)
+                if(this.password == this.r.password){
+                localStorage.setItem("empEmail",this.emailId)
+                this.router.navigate(['bot'])
+                }
+                localStorage.setItem("empEmail",this.emailId)
+                this.router.navigate(['hrtokens'])
+              }
             }
-          })
+          )
         }
         else{
-          this.router.navigate([''])
+          this.loginService.getByEmail(this.emailId).subscribe(response => this.r = response)
+          if(this.password == this.r.password){
+          localStorage.setItem("empEmail",this.emailId)
+          this.router.navigate(['bot'])
+          }
         }
       }
     );
