@@ -21,4 +21,12 @@ export class RegisterService {
   executeHrLoginService(data: FormData){
     return this.http.post(`http://localhost:8080/hr`,data);
   }
+
+  getByEmail(email){
+    return this.http.get(`http://localhost:8080/get/${email}`)
+  }
+
+  getByEmailHR(email){
+    return this.http.get(`http://localhost:8080/getHR/${email}`)
+  }
 }
