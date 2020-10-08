@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../service/authentication.service';
 import { QueryService } from '../service/query.service';
-declare let window: any; 
 
+declare let window: any; 
 
 
 @Component({
@@ -17,7 +17,8 @@ export class ChatBotComponent implements OnInit {
   }
   
 
-  constructor() { }
+  constructor(private authenticationservice: AuthenticationService,
+    private queryservice: QueryService) { }
 
   ngOnInit(): void {
     

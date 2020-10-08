@@ -30,7 +30,7 @@ export class HrtokensComponent implements OnInit {
 
   respond(){
     // this.responseservice.sendResponse(r).subscribe();
-    
+
   }
 
 }
